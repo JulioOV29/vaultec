@@ -8,21 +8,32 @@ datasource db {
 }
 
 model Activo {
-  id          Int      @id @default(autoincrement())
-  nombre      String
-  tipo        String
-  serial      String   @unique
-  fechaCompra DateTime
-  estado      String
-  responsable String
-  creadoEn    DateTime @default(now())
+  id            Int             @id @default(autoincrement())
+  nombre        String
+  tipo          String
+  serial        String          @unique
+  fechaCompra   DateTime
+  estado        String
+  responsable   String
+  creadoEn      DateTime        @default(now())
+  Mantenimiento Mantenimiento[]
 }
 
 model User {
-  id        Int      @id @default(autoincrement())
-  email     String   @unique
-  password  String
-  nombre    String
-  rol       String   @default("USER")
-  creadoEn  DateTime @default(now())
+  id       Int      @id @default(autoincrement())
+  email    String   @unique
+  password String
+  nombre   String
+  rol      String   @default("USER")
+  creadoEn DateTime @default(now())
+}
+
+model Mantenimiento {
+  id          Int      @id @default(autoincrement())
+  activoId    Int
+  activo      Activo   @relation(fields: [activoId], references: [id], onDelete: Cascade)
+  titulo      String
+  descripcion String
+  tecnico     String
+  fecha       DateTime @default(now())
 }
