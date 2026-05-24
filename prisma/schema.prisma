@@ -17,3 +17,12 @@ model Activo {
   responsable String
   creadoEn    DateTime @default(now())
 }
+
+model User {
+  id        Int      @id @default(autoincrement())
+  email     String   @unique
+  password  String
+  nombre    String
+  rol       String   @default("USER")
+  creadoEn  DateTime @default(now())
+}

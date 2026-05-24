@@ -1,9 +1,13 @@
 'use client'
 import { useState, useEffect } from 'react'
+import { useSession, signOut } from 'next-auth/react'
+import { useRouter } from 'next/navigation'
 import ActivoForm from '@/components/ActivoForm'
 import ActivoTable from '@/components/ActivoTable'
 
 export default function ActivosPage() {
+    const { data: session } = useSession()
+    const router = useRouter()
     const [activos, setActivos] = useState([])
     const [activoEditar, setActivoEditar] = useState(null)
     const [mostrarForm, setMostrarForm] = useState(false)
@@ -48,18 +52,38 @@ export default function ActivosPage() {
                 <div>
                     <h1 className="text-3xl font-bold text-gray-900">Vaultec</h1>
                     <p className="text-gray-500 text-sm mt-1">
-                        Gestión de Activos Tecnológicos
+                        Bienvenido, {session?.user?.nombre} —{' '}
+                        <span className="text-blue-600 font-medium">{session?.user?.rol}</span>
                     </p>
                 </div>
-                <button
-                    onClick={() => {
-                        setActivoEditar(null)
-                        setMostrarForm(!mostrarForm)
-                    }}
-                    className="bg-blue-600 text-white px-5 py-2 rounded-lg text-sm font-medium hover:bg-blue-700 transition"
-                >
-                    {mostrarForm ? 'Cerrar' : '+ Nuevo Activo'}
-                </button>
+
+                <div className="flex gap-3">
+                    {session?.user?.rol === 'ADMIN' && (
+                        <button
+                            onClick={() => router.push('/usuarios')}
+                            className="border border-gray-300 text-gray-600 px-5 py-2 rounded-lg text-sm font-medium hover:bg-gray-50 transition"
+                        >
+                            Usuarios
+                        </button>
+                    )}
+
+                    <button
+                        onClick={() => {
+                            setActivoEditar(null)
+                            setMostrarForm(!mostrarForm)
+                        }}
+                        className="bg-blue-600 text-white px-5 py-2 rounded-lg text-sm font-medium hover:bg-blue-700 transition"
+                    >
+                        {mostrarForm ? 'Cerrar' : '+ Nuevo Activo'}
+                    </button>
+
+                    <button
+                        onClick={() => signOut({ callbackUrl: '/login' })}
+                        className="border border-gray-300 text-gray-600 px-5 py-2 rounded-lg text-sm font-medium hover:bg-gray-50 transition"
+                    >
+                        Cerrar sesión
+                    </button>
+                </div>
             </div>
 
             {/* Formulario */}
