@@ -31,9 +31,9 @@ export default function LoginPage() {
     }
 
     return (
-        <main className="min-h-screen flex">
+        <main className="min-h-screen flex flex-col lg:flex-row">
 
-            {/* Panel izquierdo — azul */}
+            {/* Panel izquierdo — azul (oculto en mobile) */}
             <div className="hidden lg:flex lg:w-1/2 bg-gradient-to-br from-blue-500 via-blue-600 to-blue-800 flex-col justify-between p-12 relative overflow-hidden">
 
                 {/* Círculos decorativos */}
@@ -72,14 +72,24 @@ export default function LoginPage() {
             </div>
 
             {/* Panel derecho — formulario */}
-            <div className="w-full lg:w-1/2 flex flex-col justify-between p-12">
+            <div className="w-full lg:w-1/2 flex flex-col justify-between min-h-screen lg:min-h-0 p-6 sm:p-10 lg:p-12">
 
-                <div />
+                {/* Logo mobile */}
+                <div className="flex lg:hidden items-center gap-3 mb-8">
+                    <div className="bg-blue-600 p-2 rounded-lg">
+                        <div className="w-5 h-5 bg-white rounded-sm" />
+                    </div>
+                    <span className="text-gray-900 text-xl font-bold">Vaultec</span>
+                </div>
 
                 {/* Formulario */}
-                <div className="max-w-md w-full mx-auto">
-                    <h2 className="text-3xl font-bold text-gray-900 mb-2">Bienvenido de nuevo</h2>
-                    <p className="text-gray-500 mb-8">Ingresa tus credenciales para acceder al panel de administración.</p>
+                <div className="max-w-md w-full mx-auto my-auto">
+                    <h2 className="text-2xl sm:text-3xl font-bold text-gray-900 mb-2">
+                        Bienvenido de nuevo
+                    </h2>
+                    <p className="text-gray-500 text-sm mb-8">
+                        Ingresa tus credenciales para acceder al panel de administración.
+                    </p>
 
                     {error && (
                         <div className="bg-red-50 text-red-600 text-sm px-4 py-3 rounded-lg mb-6">
@@ -108,9 +118,9 @@ export default function LoginPage() {
 
                         {/* Password */}
                         <div>
-                            <div className="flex justify-between mb-2">
-                                <label className="text-sm font-medium text-gray-700">Contraseña</label>
-                            </div>
+                            <label className="block text-sm font-medium text-gray-700 mb-2">
+                                Contraseña
+                            </label>
                             <div className="relative">
                                 <Lock className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 w-5 h-5" />
                                 <input
@@ -145,16 +155,9 @@ export default function LoginPage() {
                             )}
                         </button>
                     </form>
-
                 </div>
 
-                {/* Footer */}
-                <div className="flex justify-end gap-6 text-sm text-gray-400">
-                    <span className="cursor-pointer hover:text-gray-600">Términos</span>
-                    <span className="cursor-pointer hover:text-gray-600">Privacidad</span>
-                    <span className="cursor-pointer hover:text-gray-600">Ayuda</span>
-                </div>
-
+                <div />
             </div>
         </main>
     )
